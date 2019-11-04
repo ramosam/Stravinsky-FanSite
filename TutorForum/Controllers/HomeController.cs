@@ -10,20 +10,29 @@ namespace TutorForum.Controllers
 {
     public class HomeController : Controller
     {
+        // Set up home page
         public IActionResult Index()
         {
             return View();
         }
 
+        // Set up About page
+        public IActionResult About()
+        {
+            return View();
+        }
+
+
+        // Bump the Privacy page down
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
     }
 }

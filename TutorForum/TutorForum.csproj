@@ -14,4 +14,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="Views\Forum\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\images\robotHead.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\images\robotHead.jpg" />
+  </ItemGroup>
 </Project>
