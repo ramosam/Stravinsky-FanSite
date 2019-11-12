@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<FAQuestion>;
+@{
     ViewData["Title"] = "Knowledge Base";
 }
 @{
@@ -19,5 +20,21 @@
     dictumst quisque sagittis purus sit amet volutpat. Sit amet mattis vulputate enim
     nulla aliquet porttitor lacus. Scelerisque purus semper eget duis at tellus at. Enim
     nulla aliquet porttitor lacus. Et sollicitudin ac orci phasellus egestas tellus.
-</p>
+</p><br /><br />
+
+<div class="autoCenterWide">
+    @foreach (FAQuestion faq in Model)
+    {
+        <table class=" table table-bordered ">
+            <tr>
+                <th><h5> @faq.FAQuestionTitle</h5></th>
+            </tr>
+            <tr><td>@faq.FAQAnswerBody</td></tr>
+            <tr><td>Date Added: @faq.DateAdded.ToString("yyyy-MM-dd")</td></tr>
+
+        </table>
+                
+        <br /><br />
+    }
+</div>
 <br />

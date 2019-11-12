@@ -13,12 +13,16 @@ namespace TutorForum.Controllers
         // Set up home page
         public IActionResult Forum()
         {
-            return View();
+            
+            //List<ForumQuestion> testData = ForumQuestionRepository.ForumQuestions;
+
+            return View(ForumQuestionRepository.ForumQuestions);
         }
 
         public IActionResult KnowledgeBase()
         {
-            return View(); 
+
+            return View(KnowledgeBaseRepository.KBs); 
         }
 
     }
