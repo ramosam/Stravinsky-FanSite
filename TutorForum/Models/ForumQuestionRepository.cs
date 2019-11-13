@@ -18,6 +18,7 @@ namespace TutorForum.Models
             // Get a list of three generic replies
             List<Reply> replyList = CreateGenericReplies();
 
+            // TODO: Add keywords to forum questions
             // Make the first question
             ForumQuestion fq1 = new ForumQuestion
             {
