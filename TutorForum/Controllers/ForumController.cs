@@ -14,7 +14,7 @@ namespace TutorForum.Controllers
         public IActionResult Forum()
         {
             
-            //List<ForumQuestion> testData = ForumQuestionRepository.ForumQuestions;
+            List<ForumQuestion> testData = ForumQuestionRepository.ForumQuestions;
 
             return View(ForumQuestionRepository.ForumQuestions);
         }

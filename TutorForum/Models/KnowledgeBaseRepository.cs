@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TutorForum.Models
 {
-    public class KnowledgeBaseRepository
+    public static class KnowledgeBaseRepository
     {
         private static List<FAQuestion> kbs = new List<FAQuestion>();
         public static List<FAQuestion> KBs {  get { return kbs; } }
