@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using TutorForum.Repositories;
 
 namespace TutorForum.Models
 {
-    public static class ForumQuestionRepository
+    public class ForumQuestionRepository : IRepository
     {
         private static List<ForumQuestion> forumQuestions = new List<ForumQuestion>();
-        public static List<ForumQuestion> ForumQuestions { get { return forumQuestions; } }
+        public List<ForumQuestion> ForumQuestions { get { return forumQuestions; } }
+
 
         static ForumQuestionRepository()
         {
@@ -98,7 +100,7 @@ namespace TutorForum.Models
                 DateAdded = new DateTime(2017, 1, 5),
                 Responder = new Member
                 {
-                    UserName = "SecondReplyUser",
+                    UserName = "ReplyUser2",
                 },
                 ReplyBody = "Try adding a date string formatter.  I used this " +
    " to get year-month-day:  dateObj.ToString('yyyy - MM - dd')",
@@ -124,5 +126,19 @@ namespace TutorForum.Models
             return replyList;
         }
 
+        public void AddForumQuestion(ForumQuestion fq)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ForumQuestion GetForumQuestionByQuestioner(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ForumQuestion> GetForumQuestionsByKeyword(string keyword)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,0 +1,46 @@
+﻿@model List<ForumQuestion>
+@{
+    ViewData["Title"] = "Search Results";
+}
+@{
+}
+<h1>@ViewData["Title"]</h1>
+<br />
+<p>Results Found:</p>
+<br /><br />
+<div class="autoCenterWide">
+    @foreach (ForumQuestion fq in Model)
+    {
+        <table class=" table table-bordered ">
+            <tr>
+                <th><h5> @fq.ForumQuestionHeader</h5></th>
+            </tr>
+            <tr><td>@fq.ForumQuestionBody</td></tr>
+            <tr><td>Date Added: @fq.DateAdded.ToString("yyyy-MM-dd")</td></tr>
+            <tr><td>Asked by @fq.Questioner.UserName</td></tr>
+
+            @foreach (Reply r in fq.Replies)
+            {
+                <tr>
+                    <td>@r.ReplyBody</td>
+                </tr>
+                <tr>
+                    <td>@r.Responder.UserName</td>
+                </tr>
+                <tr>
+                    <td>Date Added: @r.DateAdded.ToString("yyyy-MM-dd")</td>
+                </tr>
+                <tr>
+                    <td>Rating: @r.Rating</td>
+                </tr>
+                <tr>
+                    <td>Was this reply helpful? (Y) or (N)</td>
+                </tr>
+            }
+
+
+        </table>
+
+        <br /><br />
+    }
+</div>

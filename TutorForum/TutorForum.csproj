@@ -17,11 +17,15 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\" />
     <Folder Include="Views\Forum\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\images\robotHead.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\images\robotHead.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Views\Forum\KeywordResults.cs" />
   </ItemGroup>
 </Project>

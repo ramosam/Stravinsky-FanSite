@@ -1,0 +1,11 @@
+﻿@model List<ForumQuestion>
+@{
+    ViewData["Title"] = "Search By Keyword";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br />
+<form method="post">
+    <button asp-controller="Forum" asp-action="KeywordResults">Search</button>
+    <input type="text" placeholder="search by keyword" alt="Search by keyword" asp-controller="Forum" asp-action="KeywordResults">
+</form>
