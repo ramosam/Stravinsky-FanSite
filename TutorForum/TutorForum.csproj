@@ -27,5 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Forum\KeywordResults.cs" />
+    <Compile Remove="Repositories\KnowledgeBaseRepository.cs" />
   </ItemGroup>
 </Project>

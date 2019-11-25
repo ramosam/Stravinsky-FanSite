@@ -15,7 +15,6 @@ namespace TutorForum.Controllers
             repo = r;
         }
 
-
         public IActionResult Forum()
         {
             return View(repo.ForumQuestions);
@@ -23,7 +22,7 @@ namespace TutorForum.Controllers
 
         public IActionResult KnowledgeBase()
         {
-            return View(KnowledgeBaseRepository.KBs); 
+            return View(repo.KBs); 
         }
 
         public ActionResult SearchByKeyword()
@@ -34,9 +33,18 @@ namespace TutorForum.Controllers
         [HttpPost]
         public ActionResult KeywordResults(string userSearchString)
         {
-            // keyword search
+            // Empty local list
+            List<ForumQuestion> fqResults = new List<ForumQuestion>();
             // split string for multiple word check
-            return View("KeywordResults", repo.ForumQuestions);
+            string[] userInputs = userSearchString.Split(' ');
+            // iterate over each word found
+            for (int i = 0; i < userInputs.Length; i++)
+            {
+                // Add collection of results
+                fqResults.AddRange(repo.GetForumQuestionsByKeyword(userInputs[i]));
+            }
+            
+            return View("KeywordResults", fqResults);
         }
 
     }

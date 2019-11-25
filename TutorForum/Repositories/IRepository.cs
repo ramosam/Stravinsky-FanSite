@@ -6,8 +6,9 @@ namespace TutorForum.Repositories
     public interface IRepository
     {
         List<ForumQuestion> ForumQuestions { get; }
+        List<FAQuestion> KBs { get; }
         void AddForumQuestion(ForumQuestion fq);
-        ForumQuestion GetForumQuestionByQuestioner(string userName);
+        List<ForumQuestion> GetForumQuestionsByQuestioner(string userName);
         List<ForumQuestion> GetForumQuestionsByKeyword(string keyword);
     }
 }
