@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System.Web;
 using TutorForum.Models;
 using TutorForum.Repositories;
 
@@ -35,16 +34,47 @@ namespace TutorForum.Controllers
         {
             // Empty local list
             List<ForumQuestion> fqResults = new List<ForumQuestion>();
-            // split string for multiple word check
-            string[] userInputs = userSearchString.Split(' ');
-            // iterate over each word found
-            for (int i = 0; i < userInputs.Length; i++)
+
+            // Check if user entered anything
+            if (userSearchString != null)
             {
-                // Add collection of results
-                fqResults.AddRange(repo.GetForumQuestionsByKeyword(userInputs[i]));
+                // split string for multiple word check
+                string[] userInputs = userSearchString.Split(' ');
+                fqResults = repo.GetForumQuestionsByKeyword(userInputs[0].ToLower());
+            }
+            else
+            {
+                fqResults = repo.ForumQuestions;
             }
             
             return View("KeywordResults", fqResults);
+        }
+
+        public IActionResult AddForumQuestion()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public RedirectToActionResult AddForumQuestion(string questioner, string forumQuestionHeader, string forumQuestionBody)
+        {
+            Member newMem = new Member
+            {
+                UserName = questioner,
+            };
+            ForumQuestion newFQ = new ForumQuestion
+            {
+                Questioner = newMem,
+                ForumQuestionHeader = forumQuestionHeader,
+                ForumQuestionBody = forumQuestionBody,
+                DateAdded = System.DateTime.Now,
+                Replies = new List<Reply>(),
+                Keywords = new List<string>()
+            };
+            newFQ.FindKeywords();
+            repo.AddForumQuestion(newFQ);
+
+            return RedirectToAction("Forum", repo.ForumQuestions);
         }
 
     }

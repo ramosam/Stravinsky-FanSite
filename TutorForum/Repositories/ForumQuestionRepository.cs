@@ -8,7 +8,15 @@ namespace TutorForum.Models
     public class ForumQuestionRepository : IRepository
     {
         private static List<ForumQuestion> forumQuestions = new List<ForumQuestion>();
-        public List<ForumQuestion> ForumQuestions { get { return forumQuestions; } }
+        public List<ForumQuestion> ForumQuestions
+        {
+            get
+            {
+                if (forumQuestions.Count == 0)
+                {
+                    AddTestData();
+                }
+                return forumQuestions; } }
 
         private static List<FAQuestion> kbs = new List<FAQuestion>();
         public List<FAQuestion> KBs
@@ -23,14 +31,6 @@ namespace TutorForum.Models
             }
         }
 
-        public ForumQuestionRepository()
-        {
-            if (forumQuestions.Count == 0)
-            {
-                AddTestData();
-            }
-            
-        }
 
         private static void AddTestData()
         {
@@ -52,7 +52,7 @@ namespace TutorForum.Models
                 ForumQuestionBody = "I'm getting this error when I try to " +
                 "print a DateTime object on my website.",
                 Replies = new List<Reply>(),
-                Keywords = new List<string> { "error", "print", "DateTime", "object", "website", "date" }
+                Keywords = new List<string>()
             };
             // Add two replies
             fq1.Replies.Add(replyList[0]);
@@ -72,7 +72,7 @@ namespace TutorForum.Models
                 ForumQuestionBody = "I'm starting to think that this is all " +
                 "just a terrible conspiracy.",
                 Replies = new List<Reply>(),
-                Keywords = new List<string> { "conspiracy", "terrible" }
+                Keywords = new List<string>()
             };
             // Add one reply
             fq2.Replies.Add(replyList[2]);
@@ -91,9 +91,11 @@ namespace TutorForum.Models
                 ForumQuestionBody = "I'm starting to think that this is all " +
                 "just a terrible conspiracy.",
                 Replies = new List<Reply>(),
-                Keywords = new List<string> { "conspiracy", "terrible" }
+                Keywords = new List<string>()
             };
-
+            fq1.FindKeywords();
+            fq2.FindKeywords();
+            fq3.FindKeywords();
             forumQuestions.Add(fq1);
             forumQuestions.Add(fq2);
             forumQuestions.Add(fq3);
@@ -231,7 +233,11 @@ namespace TutorForum.Models
             return replyList;
         }
 
-        public void AddForumQuestion(ForumQuestion fq) => forumQuestions.Add(fq);
+        public void AddForumQuestion(ForumQuestion fq)
+        {
+            fq.FindKeywords();
+            forumQuestions.Add(fq);
+        }
     
 
         public List<ForumQuestion> GetForumQuestionsByQuestioner(string userName)
@@ -241,19 +247,64 @@ namespace TutorForum.Models
 
         public List<ForumQuestion> GetForumQuestionsByKeyword(string keyword)
         {
+            // Create bucket for fqs
             List<ForumQuestion> questionsByKeyword = new List<ForumQuestion>();
-            foreach (var fq in forumQuestions)
+
+            // Create lowercase version of user search string
+            string lowerKeyword = keyword;
+            // Separate into lowercase string array based on spaces
+            // Note: Punctuation affects keyword
+            string[] words = lowerKeyword.Split(' ');
+
+            /* For each word in keyword, loop to see if there are any fqs
+             * with keyword matches.
+             * 
+             * Next, make sure that there are no duplicate entries.
+             * 
+             * Then, if there is a match and is unique, add that fq to the
+             * result bucket list.
+             */
+             // For each word
+            for (int i = 0; i < words.Length; i++)
             {
-                foreach (var fqKeyword in fq.Keywords)
+                // For each question
+                for (int q = 0; q < forumQuestions.Count; q++)
                 {
-                    if (fqKeyword == keyword)
+                    // Find match
+                    if (forumQuestions[q].Keywords.Contains(words[i]))
                     {
-                        questionsByKeyword.Add(fq);
-                        
+                        // Add to bucket
+                        questionsByKeyword.Add(forumQuestions[q]);
                     }
                 }
             }
-            return questionsByKeyword; 
+
+            List<ForumQuestion> singleQByKeyword =  RemoveDuplicates(questionsByKeyword);
+
+
+            return singleQByKeyword; 
+        }
+
+        private List<ForumQuestion> RemoveDuplicates(List<ForumQuestion> origFQList)
+        {
+            // Create shortList bucket
+            List<ForumQuestion> shortList = new List<ForumQuestion>();
+            // Create list for header comparison
+            List<string> headerCheckList = new List<string>();
+            // Loop through each question 
+            for (int i = 0; i < origFQList.Count; i++)
+            {
+                // Check if unique
+                if (!headerCheckList.Contains(origFQList[i].ForumQuestionHeader))
+                {
+                    // Add to checkList
+                    headerCheckList.Add(origFQList[i].ForumQuestionHeader);
+                    // Add to collection bucket
+                    shortList.Add(origFQList[i]);
+                }
+            }
+            // Return shortened list
+            return shortList;
         }
     }
 }
