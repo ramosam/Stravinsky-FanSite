@@ -191,8 +191,8 @@ namespace TutorForum.Repositories
                 };
                 context.Tutors.Add(t1);
 
-
-
+                // Save everything
+                context.SaveChanges();
 
             }
         }
