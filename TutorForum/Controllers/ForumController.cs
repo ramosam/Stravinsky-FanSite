@@ -21,7 +21,7 @@ namespace TutorForum.Controllers
 
         public IActionResult KnowledgeBase()
         {
-            return View(repo.KBs); 
+            return View(repo.FAQuestions); 
         }
 
         public ActionResult SearchByKeyword()
@@ -56,7 +56,7 @@ namespace TutorForum.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult AddForumQuestion(string questioner, string forumQuestionHeader, string forumQuestionBody)
+        public RedirectToActionResult AddForumQuestion(string questioner, string questionHeader, string questionBody)
         {
             Member newMem = new Member
             {
@@ -65,13 +65,14 @@ namespace TutorForum.Controllers
             ForumQuestion newFQ = new ForumQuestion
             {
                 Questioner = newMem,
-                ForumQuestionHeader = forumQuestionHeader,
-                ForumQuestionBody = forumQuestionBody,
+                QuestionHeader = questionHeader,
+                QuestionBody = questionBody,
                 DateAdded = System.DateTime.Now,
-                Replies = new List<Reply>(),
-                Keywords = new List<string>()
+                
             };
+
             newFQ.FindKeywords();
+            repo.AddMember(newMem);
             repo.AddForumQuestion(newFQ);
 
             return RedirectToAction("Forum", repo.ForumQuestions);
