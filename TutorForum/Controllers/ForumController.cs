@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using TutorForum.Models;
 using TutorForum.Repositories;
@@ -7,13 +9,14 @@ namespace TutorForum.Controllers
 {
     public class ForumController : Controller
     {
-        // Set up home page
+        
         IRepository repo;
         public ForumController(IRepository r)
         {
             repo = r;
         }
 
+        // Set up home page
         public IActionResult Forum()
         {
             return View(repo.ForumQuestions);
@@ -32,20 +35,29 @@ namespace TutorForum.Controllers
         [HttpPost]
         public ActionResult KeywordResults(string userSearchString)
         {
-            // Empty local list
-            List<ForumQuestion> fqResults = new List<ForumQuestion>();
+            // Empty fqList
+            List<IQuestion> fqResults = new List<IQuestion>();
 
             // Check if user entered anything
             if (userSearchString != null)
             {
                 // split string for multiple word check
                 string[] userInputs = userSearchString.Split(' ');
-                fqResults = repo.GetForumQuestionsByKeyword(userInputs[0].ToLower());
+                fqResults = repo.GetIQuestionsByKeyword(userInputs[0].ToLower());
             }
             else
             {
-                fqResults = repo.ForumQuestions;
+                // Display Forum Questions instead
+                List<ForumQuestion> forumQs = repo.ForumQuestions;
+
+                for (int i = 0; i < forumQs.Count; i += 1)
+                {
+                    fqResults.Add(forumQs[i]);
+                }
+                 
             }
+
+            //
             
             return View("KeywordResults", fqResults);
         }
@@ -70,13 +82,46 @@ namespace TutorForum.Controllers
                 DateAdded = System.DateTime.Now,
                 
             };
-
+            
             newFQ.FindKeywords();
             repo.AddMember(newMem);
-            repo.AddForumQuestion(newFQ);
+            repo.AddForumQuestion(newFQ, newMem);
+            
 
             return RedirectToAction("Forum", repo.ForumQuestions);
         }
 
+        public IActionResult AddForumReply(string header)
+        {
+
+            return View("AddForumReply", HttpUtility.HtmlDecode(header));
+        }
+
+        [HttpPost]
+        public RedirectToActionResult AddForumReply(string header, string responder, string replyBody)
+        {
+            ForumQuestion fq = repo.ForumQuestions.Find(q => q.QuestionHeader == header);
+            Member newMem = repo.Members.Find(m => m.UserName == responder);
+            if (newMem == null)
+            {
+                newMem = new Member
+                {
+                    UserName = responder
+                };
+                repo.AddMember(newMem);
+            }
+
+            Reply reply = new Reply
+            {
+                ReplyBody = replyBody,
+                Responder = newMem
+            };
+            repo.Replies.Add(reply);
+            newMem.Answers.Add(reply);
+            
+
+
+            return RedirectToAction("Forum", repo.ForumQuestions);
+        }
     }
 }

@@ -11,10 +11,10 @@ namespace TutorForum.Repositories
         List<Tutor> Tutors { get; }
         List<Member> Members { get; }
         //List<ForumQuestion> GetForumQuestionsByQuestioner(string userName);
-        List<ForumQuestion> GetForumQuestionsByKeyword(string keyword);
-        void AddForumQuestion(ForumQuestion fq);
+        List<IQuestion> GetIQuestionsByKeyword(string keyword);
+        void AddForumQuestion(ForumQuestion fq, Member member);
         void AddMember(Member member);
-        void AddReply(Reply r);
+        void AddReply(ForumQuestion fq, Reply r);
         void AddFAQuestion(FAQuestion q);
         void AddTutor(Tutor t);
     }

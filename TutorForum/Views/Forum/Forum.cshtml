@@ -35,25 +35,21 @@
                   @foreach (Reply r in fq.Replies)
                   {
                       <tr>
-                          <td>@r.ReplyBody</td>
+                          <td><p>@r.ReplyBody</p></td>
                       </tr>
                       <tr>
-                          <td>@r.Responder</td>
+                          <td>Submitted by: @r.Responder.UserName</td>
                       </tr>
                       <tr>
-                          <td>Date Added: @r.DateAdded.ToString("yyyy-MM-dd")</td>
+                          <td>Date Added: @r.DateAdded.ToString("yyyy-MM-dd") <pre>Rating: @r.Rating</pre></td>
                       </tr>
-                      <tr>
-                          <td>Rating: @r.Rating</td>
-                      </tr>
-                      <tr>
-                          <td>Was this reply helpful? (Y) or (N)</td>
-                      </tr>
+                      
                   }
 
 
               </table>
 
               <br /><br />
+              <a asp-action="AddComment" asp-route-header="@fq.QuestionHeader">Add a comment</a>
           }
       </div>

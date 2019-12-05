@@ -31,13 +31,17 @@ namespace TutorForum.Repositories
         public void AddMember(Member m) => members.Add(m);
 
 
-        public void AddForumQuestion(ForumQuestion fq)
+        public void AddForumQuestion(ForumQuestion fq, Member member)
         {
-            fq.FindKeywords();
+            member.QuestionsAsked.Add(fq);
             forumQuestions.Add(fq);
         }
 
-        public void AddReply(Reply r) => replies.Add(r);
+        public void AddReply(ForumQuestion fq, Reply r)
+        {
+            replies.Add(r);
+            fq.AddReply(r);
+        }
 
 
         public void AddFAQuestion(FAQuestion q) => fAQuestions.Add(q);
@@ -51,10 +55,10 @@ namespace TutorForum.Repositories
         //    return forumQuestions.FindAll(fq => fq.Questioner.UserName == userName);
         //}
 
-        public List<ForumQuestion> GetForumQuestionsByKeyword(string keyword)
+        public List<IQuestion> GetIQuestionsByKeyword(string keyword)
         {
             // Create bucket for fqs
-            List<ForumQuestion> questionsByKeyword = new List<ForumQuestion>();
+            List<IQuestion> questionsByKeyword = new List<IQuestion>();
 
             // Create lowercase version of user search string
             string lowerKeyword = keyword;
@@ -85,16 +89,16 @@ namespace TutorForum.Repositories
                 }
             }
 
-            List<ForumQuestion> singleQByKeyword = RemoveDuplicates(questionsByKeyword);
+            List<IQuestion> singleQByKeyword = RemoveDuplicates(questionsByKeyword);
 
 
             return singleQByKeyword;
         }
 
-        private List<ForumQuestion> RemoveDuplicates(List<ForumQuestion> origFQList)
+        private List<IQuestion> RemoveDuplicates(List<IQuestion> origFQList)
         {
             // Create shortList bucket
-            List<ForumQuestion> shortList = new List<ForumQuestion>();
+            List<IQuestion> shortList = new List<IQuestion>();
             // Create list for header comparison
             List<string> headerCheckList = new List<string>();
             // Loop through each question 
@@ -201,15 +205,12 @@ namespace TutorForum.Repositories
             r1.FindKeywords();
             r2.FindKeywords();
 
+            // Add replies to forum questions
+            AddReply(fq1, r1);
+            AddReply(fq1, r2);
             // Add replies to context
-            AddReply(r1);
-            AddReply(r2);
-            // Add first reply to first ForumQ
-            fq1.AddReply(r1);
-            // Add second reply to first ForumQ
-            fq2.AddReply(r2);
-            AddForumQuestion(fq1);
-            AddForumQuestion(fq2);
+            AddForumQuestion(fq1, m1);
+            AddForumQuestion(fq2, m2);
 
 
             // Make FAQs/Kbs

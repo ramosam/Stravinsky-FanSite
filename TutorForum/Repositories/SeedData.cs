@@ -13,7 +13,7 @@ namespace TutorForum.Repositories
         {
             if (!context.ForumQuestions.Any())
             {
-                // Make Users
+                // Make Users 
                 Member m1 = new Member
                 {
                     UserName = "Michelangelo di Lodovico Buonarroti Simoni",
@@ -46,8 +46,6 @@ namespace TutorForum.Repositories
 
                 };
 
-
-
                 context.Members.Add(m1);
                 context.Members.Add(m2);
                 context.Members.Add(m3);
@@ -66,8 +64,6 @@ namespace TutorForum.Repositories
                 "print a DateTime object on my website.",
 
                 };
-                // Populate keywords
-                fq1.FindKeywords();
 
                 ForumQuestion fq2 = new ForumQuestion
                 {
@@ -78,8 +74,9 @@ namespace TutorForum.Repositories
 
                 };
                 // Populate keywords
+                fq1.FindKeywords();
                 fq2.FindKeywords();
-
+                // Moving adding and updating forumQuestions and users after replies are accounted for.
 
 
 
@@ -104,12 +101,24 @@ namespace TutorForum.Repositories
                 // Add replies to context
                 context.Replies.Add(r1);
                 context.Replies.Add(r2);
-                // Add first reply to first ForumQ
+                // Add replies to members
+                m3.Answers.Add(r1);
+                m4.Answers.Add(r2);
+                // Update affected members
+                context.Members.Update(m3);
+                context.Members.Update(m4);
+                // Add reply to ForumQ
                 fq1.AddReply(r1);
-                // Add second reply to first ForumQ
-                fq2.AddReply(r2);
+                fq1.AddReply(r2);
+                // Add forum questions to context
                 context.ForumQuestions.Add(fq1);
-                context.ForumQuestions.Add(fq1);
+                context.ForumQuestions.Add(fq2);
+                // Add questions to members
+                m1.QuestionsAsked.Add(fq1);
+                m2.QuestionsAsked.Add(fq2);
+                // Update affected members
+                context.Members.Update(m1);
+                context.Members.Update(m2);
 
 
                 // Make FAQs/Kbs

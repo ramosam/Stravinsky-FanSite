@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TutorForum.Models;
+using TutorForum.Repositories;
 
 namespace TutorForum.Controllers
 {
     public class HomeController : Controller
     {
+
+        IRepository repo;
+        public HomeController(IRepository r)
+        {
+            repo = r;
+        }
+
         // Set up home page
         public IActionResult Index()
         {
@@ -19,7 +24,8 @@ namespace TutorForum.Controllers
         // Set up About page
         public IActionResult About()
         {
-            return View();
+            List<Tutor> tutors = repo.Tutors;
+            return View(tutors);
         }
 
 

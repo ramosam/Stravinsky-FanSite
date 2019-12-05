@@ -44,6 +44,7 @@ namespace TutorForum.Models
             {
                 var replies = context.Replies
                     .Include(r => r.Responder)
+                        .ThenInclude(r => r.UserName)
                     .ToList();
                 return replies;
             }
@@ -54,7 +55,9 @@ namespace TutorForum.Models
         {
             get
             {
-                var tutors = context.Tutors.ToList();
+                var tutors = context.Tutors
+                    .Include(t => t.Expertise)
+                    .ToList();
                 return tutors;
             }
         }
@@ -64,7 +67,8 @@ namespace TutorForum.Models
         {
             get
             {
-                var members = context.Members.ToList();
+                var members = context.Members
+                    .ToList();
                 return members;
             }
         }
@@ -77,16 +81,19 @@ namespace TutorForum.Models
         }
         
 
-        public void AddForumQuestion(ForumQuestion fq)
+        public void AddForumQuestion(ForumQuestion fq, Member member)
         {
-            fq.FindKeywords();
             context.ForumQuestions.Add(fq);
+            member.QuestionsAsked.Add(fq);
+            context.Members.Update(member);
             context.SaveChanges();
         }
 
-        public void AddReply(Reply r)
+        public void AddReply(ForumQuestion fq, Reply r)
         {
             context.Replies.Add(r);
+            fq.AddReply(r);
+            context.ForumQuestions.Update(fq);
             context.SaveChanges();
         }
 
@@ -105,16 +112,10 @@ namespace TutorForum.Models
         }
         
 
-        //public List<ForumQuestion> GetForumQuestionsByQuestioner(string userName)
-        //{
-        //    ForumQuestion fq = context.ForumQuestions.
-        //    return forumQuestions.FindAll(fq => fq.Questioner.UserName == userName);
-        //}
-
-        public List<ForumQuestion> GetForumQuestionsByKeyword(string keyword)
+        public List<IQuestion> GetIQuestionsByKeyword(string keyword)
         {
             // Create bucket for fqs
-            List<ForumQuestion> questionsByKeyword = new List<ForumQuestion>();
+            List<IQuestion> questionsByKeyword = new List<IQuestion>();
 
             // Create lowercase version of user search string
             string lowerKeyword = keyword;
@@ -131,32 +132,39 @@ namespace TutorForum.Models
              * result bucket list.
              */
             // Get list of current questions
+
             var currentForumQs = context.ForumQuestions.ToList();
+            var currentFAQs = context.FAQuestions.ToList();
+            List<IQuestion> currentIQs = new List<IQuestion>();
+            currentIQs.AddRange(currentForumQs);
+            currentIQs.AddRange(currentFAQs);
+
+
              // For each word
             for (int i = 0; i < words.Length; i++)
             {
                 // For each question
-                for (int q = 0; q < currentForumQs.Count; q++)
+                for (int q = 0; q < currentIQs.Count; q++)
                 {
                     // Find match
-                    if (currentForumQs[q].Keywords.Contains(words[i]))
+                    if (currentIQs[q].Keywords.Contains(words[i]))
                     {
                         // Add to bucket
-                        questionsByKeyword.Add(currentForumQs[q]);
+                        questionsByKeyword.Add(currentIQs[q]);
                     }
                 }
             }
 
-            List<ForumQuestion> singleQByKeyword =  RemoveDuplicates(questionsByKeyword);
+            List<IQuestion> singleQByKeyword =  RemoveDuplicates(questionsByKeyword);
 
 
             return singleQByKeyword; 
         }
 
-        private List<ForumQuestion> RemoveDuplicates(List<ForumQuestion> origFQList)
+        private List<IQuestion> RemoveDuplicates(List<IQuestion> origFQList)
         {
             // Create shortList bucket
-            List<ForumQuestion> shortList = new List<ForumQuestion>();
+            List<IQuestion> shortList = new List<IQuestion>();
             // Create list for header comparison
             List<string> headerCheckList = new List<string>();
             // Loop through each question 
