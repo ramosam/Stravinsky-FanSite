@@ -38,7 +38,7 @@ namespace TutorForum
             // For Mac OS with SQLite
             services.AddDbContext<AppDbContext>(
                 options => options.UseSqlite(
-                    Configuration["Data:FanSite:SQLiteConnection"]));
+                    Configuration["Data:TutorForum:SQLiteConnection"]));
 
         }
 

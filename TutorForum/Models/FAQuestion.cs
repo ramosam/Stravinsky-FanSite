@@ -5,6 +5,7 @@ namespace TutorForum.Models
 {
     public class FAQuestion : IQuestion
     {
+        public int FAQuestionID { get; set; }
         public DateTime DateAdded { get; set; }
         public string QuestionHeader { get; set; }
         public string QuestionBody { get; set; }

@@ -6,6 +6,7 @@ namespace TutorForum.Models
 {
     public class ForumQuestion : IQuestion
     {
+        public int ForumQuestionID { get; set; }
         public Member Questioner { get; set; }
 
         public DateTime DateAdded { get; set; }

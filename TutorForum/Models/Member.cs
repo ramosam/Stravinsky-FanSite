@@ -5,7 +5,7 @@ namespace TutorForum.Models
 {
     public class Member
     {
-
+        public int MemberID { get; set; }
         private List<ForumQuestion> questionsAsked = new List<ForumQuestion>();
         private List<Reply> answers = new List<Reply>();
 

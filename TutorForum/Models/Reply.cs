@@ -5,6 +5,7 @@ namespace TutorForum.Models
 {
     public class Reply
     {
+        public int ReplyID { get; set; }
         // Which question the Reply is associated with
         public ForumQuestion QuestionPost { get; set; }
 
