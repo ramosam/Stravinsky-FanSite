@@ -37,9 +37,10 @@ namespace TutorForum.Repositories
             forumQuestions.Add(fq);
         }
 
-        public void AddReply(ForumQuestion fq, Reply r)
+        public void AddReply(ForumQuestion fq, Reply r, Member replyMember)
         {
             replies.Add(r);
+            replyMember.Answers.Add(r);
             fq.AddReply(r);
         }
 
@@ -49,11 +50,6 @@ namespace TutorForum.Repositories
 
         public void AddTutor(Tutor t) => tutors.Add(t);
 
-
-        //public List<ForumQuestion> GetForumQuestionsByQuestioner(string userName)
-        //{
-        //    return forumQuestions.FindAll(fq => fq.Questioner.UserName == userName);
-        //}
 
         public List<IQuestion> GetIQuestionsByKeyword(string keyword)
         {
@@ -206,8 +202,8 @@ namespace TutorForum.Repositories
             r2.FindKeywords();
 
             // Add replies to forum questions
-            AddReply(fq1, r1);
-            AddReply(fq1, r2);
+            AddReply(fq1, r1, m3);
+            AddReply(fq1, r2, m4);
             // Add replies to context
             AddForumQuestion(fq1, m1);
             AddForumQuestion(fq2, m2);

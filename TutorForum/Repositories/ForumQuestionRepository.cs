@@ -56,7 +56,6 @@ namespace TutorForum.Models
             get
             {
                 var tutors = context.Tutors
-                    .Include(t => t.Expertise)
                     .ToList();
                 return tutors;
             }
@@ -83,17 +82,22 @@ namespace TutorForum.Models
 
         public void AddForumQuestion(ForumQuestion fq, Member member)
         {
+            // Make sure that there are keywords
+            fq.FindKeywords();
+            // Find match
             context.ForumQuestions.Add(fq);
             member.QuestionsAsked.Add(fq);
             context.Members.Update(member);
             context.SaveChanges();
         }
 
-        public void AddReply(ForumQuestion fq, Reply r)
+        public void AddReply(ForumQuestion fq, Reply r, Member replyMember)
         {
             context.Replies.Add(r);
             fq.AddReply(r);
             context.ForumQuestions.Update(fq);
+            replyMember.Answers.Add(r);
+            context.Members.Update(replyMember);
             context.SaveChanges();
         }
 
@@ -146,6 +150,8 @@ namespace TutorForum.Models
                 // For each question
                 for (int q = 0; q < currentIQs.Count; q++)
                 {
+                    // Make sure that there are keywords
+                    currentIQs[q].FindKeywords();
                     // Find match
                     if (currentIQs[q].Keywords.Contains(words[i]))
                     {

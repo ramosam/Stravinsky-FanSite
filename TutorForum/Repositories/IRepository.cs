@@ -14,7 +14,7 @@ namespace TutorForum.Repositories
         List<IQuestion> GetIQuestionsByKeyword(string keyword);
         void AddForumQuestion(ForumQuestion fq, Member member);
         void AddMember(Member member);
-        void AddReply(ForumQuestion fq, Reply r);
+        void AddReply(ForumQuestion fq, Reply r, Member replyMember);
         void AddFAQuestion(FAQuestion q);
         void AddTutor(Tutor t);
     }

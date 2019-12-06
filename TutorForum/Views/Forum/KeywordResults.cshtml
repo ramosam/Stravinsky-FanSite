@@ -9,36 +9,24 @@
 <p>Results Found:</p>
 <br /><br />
 <div class="autoCenterWide">
-    @foreach (ForumQuestion fq in Model)
+
+
+    @foreach (IQuestion q in Model)
     {
+
         <table class=" table table-bordered ">
             <tr>
-                <th><h5> @fq.QuestionHeader</h5></th>
+                <th><h5> @q.QuestionHeader</h5></th>
             </tr>
-            <tr><td>@fq.QuestionBody</td></tr>
-            <tr><td>Date Added: @fq.DateAdded.ToString("yyyy-MM-dd")</td></tr>
-            <tr><td>Asked by @fq.Questioner.UserName</td></tr>
-
-            @foreach (Reply r in fq.Replies)
+            <tr><td>@q.QuestionBody</td></tr>
+            <tr><td>Date Added: @q.DateAdded.ToString("yyyy-MM-dd")</td></tr>
+            @if (q is ForumQuestion)
             {
-                <tr>
-                    <td>@r.ReplyBody</td>
-                </tr>
-                <tr>
-                    <td>@r.Responder.UserName</td>
-                </tr>
-                <tr>
-                    <td>Date Added: @r.DateAdded.ToString("yyyy-MM-dd")</td>
-                </tr>
-                <tr>
-                    <td>Rating: @r.Rating</td>
-                </tr>
-                <tr>
-                    <td>Was this reply helpful? (Y) or (N)</td>
-                </tr>
+                <tr><td>Navigate to the <a href="/Forum/Forum">Forum</a></td></tr>
+            } else
+            {
+                <tr><td>Navigate to the <a href="/Forum/KnowledgeBase">Knowledge Base</a></td></tr>
             }
-
-
         </table>
 
         <br /><br />

@@ -41,9 +41,9 @@ namespace TutorForum.Controllers
             // Check if user entered anything
             if (userSearchString != null)
             {
-                // split string for multiple word check
-                string[] userInputs = userSearchString.Split(' ');
-                fqResults = repo.GetIQuestionsByKeyword(userInputs[0].ToLower());
+                
+                // Grab the first word and search on it
+                fqResults = repo.GetIQuestionsByKeyword(userSearchString.ToLower());
             }
             else
             {
@@ -54,7 +54,6 @@ namespace TutorForum.Controllers
                 {
                     fqResults.Add(forumQs[i]);
                 }
-                 
             }
 
             //
@@ -80,7 +79,6 @@ namespace TutorForum.Controllers
                 QuestionHeader = questionHeader,
                 QuestionBody = questionBody,
                 DateAdded = System.DateTime.Now,
-                
             };
             
             newFQ.FindKeywords();
@@ -93,7 +91,6 @@ namespace TutorForum.Controllers
 
         public IActionResult AddForumReply(string header)
         {
-
             return View("AddForumReply", HttpUtility.HtmlDecode(header));
         }
 
@@ -118,7 +115,6 @@ namespace TutorForum.Controllers
             };
             repo.Replies.Add(reply);
             newMem.Answers.Add(reply);
-            
 
 
             return RedirectToAction("Forum", repo.ForumQuestions);

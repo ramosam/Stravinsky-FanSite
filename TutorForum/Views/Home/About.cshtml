@@ -6,7 +6,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your tutors' awesome lives.</p>
+<p>Use this page to explore your favorite tutors' awesome lives.</p>
 
 <ul>
     @foreach (Tutor tutor in Model)
@@ -21,15 +21,16 @@
             </div>
             <div class="col-8">
                 <p>
-                    @{
-                        string expertiseString = "";
-                        foreach (string s in tutor.Expertise)
-                        {
-                            expertiseString += (" " + s + ",");
-                        }
-                    }
-                    Tutor @tutor.UserName is available to help with
-                    @expertiseString and is frequently updating our site.
+                    Tutor @tutor.UserName is available to help 
+                    and is frequently updating our site. You can find Tutor
+                    @tutor.UserName's handiwork over in the Forum.
+                </p>
+                <p>
+                    In his free time, @tutor.UserName enjoys growing tomatoes.
+                    These tomatoes have won over 14 Blue Ribbon prizes at Lane's
+                    County Fair.  They have even been requested by none other than
+                    Chef Boyardee, who uses these tomatoes to make pizza sauce.
+
                 </p>
             </div>
         </div>

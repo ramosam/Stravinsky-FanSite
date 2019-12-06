@@ -77,7 +77,10 @@ namespace TutorForum.Repositories
                 fq1.FindKeywords();
                 fq2.FindKeywords();
                 // Moving adding and updating forumQuestions and users after replies are accounted for.
-
+                context.ForumQuestions.Add(fq1);
+                context.ForumQuestions.Add(fq2);
+                m1.QuestionsAsked.Add(fq1);
+                m2.QuestionsAsked.Add(fq2);
 
 
                 // Make Replies
@@ -104,21 +107,11 @@ namespace TutorForum.Repositories
                 // Add replies to members
                 m3.Answers.Add(r1);
                 m4.Answers.Add(r2);
-                // Update affected members
-                context.Members.Update(m3);
-                context.Members.Update(m4);
+
                 // Add reply to ForumQ
                 fq1.AddReply(r1);
                 fq1.AddReply(r2);
-                // Add forum questions to context
-                context.ForumQuestions.Add(fq1);
-                context.ForumQuestions.Add(fq2);
-                // Add questions to members
-                m1.QuestionsAsked.Add(fq1);
-                m2.QuestionsAsked.Add(fq2);
-                // Update affected members
-                context.Members.Update(m1);
-                context.Members.Update(m2);
+
 
 
                 // Make FAQs/Kbs
