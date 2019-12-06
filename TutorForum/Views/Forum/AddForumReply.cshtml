@@ -1,4 +1,4 @@
-﻿@model String;
+﻿@model String
 @{
     ViewData["Title"] = "Add a Reply";
 }
@@ -8,18 +8,20 @@
     <br />
     <p>
         The question is:
-        @Model
-
+        <em>@Model</em>
+        <br /><br />
         Please provide all the relevant information that you can. 
     </p>
-    <br />
-    <br />
-    <form asp-controller="Forum" class="p-a-1" asp-action="post">
-        <label for="responder">Your username:</label>
-        <input class="form-control" name="responder" />
-        <label for="replyBody">Response:</label>
-        <textarea class="form-control" rows="6" name="replyBody"></textarea>
-        
+   
+    <form class="p-a-1" asp-action="post">
+        <div class="form-group">
+            <label for="responder">Your username:</label>
+            <input class="form-control" name="responder" />
+        </div>
+        <div class="form-group">
+            <label for="replyBody">Response:</label>
+            <textarea class="form-control" rows="6" name="replyBody"></textarea>
+        </div>
         <br />
         <button class="btn btn-primary" type="submit">
             Submit question

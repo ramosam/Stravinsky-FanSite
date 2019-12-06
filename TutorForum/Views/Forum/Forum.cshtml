@@ -41,13 +41,13 @@
                           <td>Submitted by: @r.Responder.UserName</td>
                       </tr>
                       <tr>
-                          <td>Date Added: @r.DateAdded.ToString("yyyy-MM-dd") <pre>Rating: @r.Rating</pre></td>
+                          <td>Date Added: @r.DateAdded.ToString("yyyy-MM-dd") </td>
                       </tr>
                       
                   }
 
               </table>
-              <a asp-action="AddComment" asp-route-header="@fq.QuestionHeader">Add a comment</a>
+              <a asp-action="AddForumReply" asp-route-questionheader="@fq.QuestionHeader">Add a reply</a>
               <br /><br /><br />
           }
       </div>

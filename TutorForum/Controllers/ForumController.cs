@@ -66,6 +66,12 @@ namespace TutorForum.Controllers
             return View();
         }
 
+        public IActionResult AddForumReply(string questionheader)
+        {
+            return View("AddForumReply", HttpUtility.HtmlDecode(questionheader));
+            //return View();
+        }
+
         [HttpPost]
         public RedirectToActionResult AddForumQuestion(string questioner, string questionHeader, string questionBody)
         {
@@ -89,15 +95,12 @@ namespace TutorForum.Controllers
             return RedirectToAction("Forum", repo.ForumQuestions);
         }
 
-        public IActionResult AddForumReply(string header)
-        {
-            return View("AddForumReply", HttpUtility.HtmlDecode(header));
-        }
+
 
         [HttpPost]
-        public RedirectToActionResult AddForumReply(string header, string responder, string replyBody)
+        public RedirectToActionResult AddForumReply(string questionheader, string responder, string replyBody)
         {
-            ForumQuestion fq = repo.ForumQuestions.Find(q => q.QuestionHeader == header);
+            ForumQuestion fq = repo.ForumQuestions.Find(q => q.QuestionHeader == questionheader);
             Member newMem = repo.Members.Find(m => m.UserName == responder);
             if (newMem == null)
             {
@@ -113,9 +116,8 @@ namespace TutorForum.Controllers
                 ReplyBody = replyBody,
                 Responder = newMem
             };
-            repo.Replies.Add(reply);
-            newMem.Answers.Add(reply);
 
+            repo.AddReply(fq, reply, newMem);
 
             return RedirectToAction("Forum", repo.ForumQuestions);
         }

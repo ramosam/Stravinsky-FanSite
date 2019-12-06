@@ -44,7 +44,7 @@ namespace TutorForum.Models
             {
                 var replies = context.Replies
                     .Include(r => r.Responder)
-                        .ThenInclude(r => r.UserName)
+
                     .ToList();
                 return replies;
             }
