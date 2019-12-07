@@ -16,11 +16,11 @@
     <form class="p-a-1" asp-action="post">
         <div class="form-group">
             <label for="responder">Your username:</label>
-            <input class="form-control" name="responder" />
+            <input required class="form-control" name="responder" />
         </div>
         <div class="form-group">
             <label for="replyBody">Response:</label>
-            <textarea class="form-control" rows="6" name="replyBody"></textarea>
+            <textarea required class="form-control" rows="6" name="replyBody"></textarea>
         </div>
         <br />
         <button class="btn btn-primary" type="submit">
