@@ -41,22 +41,9 @@ namespace TutorForum.Controllers
             // Check if user entered anything
             if (userSearchString != null)
             {
-                
-                // Grab the first word and search on it
+                // Grab the userSting to process
                 fqResults = repo.GetIQuestionsByKeyword(userSearchString.ToLower());
             }
-            else
-            {
-                // Display Forum Questions instead
-                List<ForumQuestion> forumQs = repo.ForumQuestions;
-
-                for (int i = 0; i < forumQs.Count; i += 1)
-                {
-                    fqResults.Add(forumQs[i]);
-                }
-            }
-
-            //
             
             return View("KeywordResults", fqResults);
         }
@@ -75,21 +62,27 @@ namespace TutorForum.Controllers
         [HttpPost]
         public RedirectToActionResult AddForumQuestion(string questioner, string questionHeader, string questionBody)
         {
-            Member newMem = new Member
+            if (questioner == null || questionHeader == null || questionBody == null)
             {
-                UserName = questioner,
-            };
-            ForumQuestion newFQ = new ForumQuestion
+                return RedirectToAction("AddForumQuestion");
+            } else
             {
-                Questioner = newMem,
-                QuestionHeader = questionHeader,
-                QuestionBody = questionBody,
-                DateAdded = System.DateTime.Now,
-            };
-            
-            newFQ.FindKeywords();
-            repo.AddMember(newMem);
-            repo.AddForumQuestion(newFQ, newMem);
+                Member newMem = new Member
+                {
+                    UserName = questioner,
+                };
+                ForumQuestion newFQ = new ForumQuestion
+                {
+                    Questioner = newMem,
+                    QuestionHeader = questionHeader,
+                    QuestionBody = questionBody,
+                    DateAdded = System.DateTime.Now,
+                };
+
+                newFQ.FindKeywords();
+                repo.AddMember(newMem);
+                repo.AddForumQuestion(newFQ, newMem);
+            }
             
 
             return RedirectToAction("Forum", repo.ForumQuestions);
