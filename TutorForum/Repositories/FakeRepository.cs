@@ -291,5 +291,20 @@ namespace TutorForum.Repositories
 
         }
 
+        public ForumQuestion FindForumQuestionByQuestionHeader(string questionHeader)
+        {
+            ForumQuestion fq = new ForumQuestion();
+            for (int i = 0; i < forumQuestions.Count; i += 1)
+            {
+                string fqHeader = forumQuestions[i].QuestionHeader;
+                if (fqHeader == questionHeader)
+                {
+                    fq = forumQuestions[i];
+                }
+            }
+
+            
+            return fq;
+        }
     }
 }

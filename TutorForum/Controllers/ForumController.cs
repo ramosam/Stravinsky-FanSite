@@ -100,7 +100,7 @@ namespace TutorForum.Controllers
         [HttpPost]
         public RedirectToActionResult AddForumReply(string questionheader, string responder, string replyBody)
         {
-            ForumQuestion fq = repo.ForumQuestions.Find(q => q.QuestionHeader == questionheader);
+            ForumQuestion fq = repo.FindForumQuestionByQuestionHeader(questionheader);
             Member newMem = repo.Members.Find(m => m.UserName == responder);
             if (newMem == null)
             {

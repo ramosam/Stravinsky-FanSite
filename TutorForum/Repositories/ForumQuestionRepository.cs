@@ -189,5 +189,11 @@ namespace TutorForum.Models
             return shortList;
         }
 
+        public ForumQuestion FindForumQuestionByQuestionHeader(string questionHeader)
+        {
+            List<ForumQuestion> forumQuestions = context.ForumQuestions.ToList();
+            ForumQuestion fq = forumQuestions.Find(q => q.QuestionHeader == questionHeader);
+            return fq;
+        }
     }
 }

@@ -17,5 +17,6 @@ namespace TutorForum.Repositories
         void AddReply(ForumQuestion fq, Reply r, Member replyMember);
         void AddFAQuestion(FAQuestion q);
         void AddTutor(Tutor t);
+        ForumQuestion FindForumQuestionByQuestionHeader(string questionHeader);
     }
 }
