@@ -1,85 +1,42 @@
-﻿@{
+﻿@model List<Tutor>;
+
+@{
     ViewData["Title"] = "About the Tutors";
 }
-@{
-}
+
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your tutors' awesome lives.</p>
+<p>Use this page to explore your favorite tutors' awesome lives.</p>
 
 <ul>
-  <li>
-    <div class="row">
-        <div class="col-4">
-            <figure>
-                <img src="~/images/robotHead.jpg" />
-                <figcaption>Tutor 1 is looking dapper.</figcaption>
-            </figure>
+    @foreach (Tutor tutor in Model)
+    {
+      <li>
+        <div class="row">
+            <div class="col-4">
+                <figure>
+                    <img src="~/images/robotHead.jpg" />
+                    <figcaption>@tutor.Title</figcaption>
+                </figure>
+            </div>
+            <div class="col-8">
+                <p>
+                    Tutor @tutor.UserName is available to help 
+                    and is frequently updating our site. You can find Tutor
+                    @tutor.UserName's handiwork over in the Forum.
+                </p>
+                <p>
+                    In his free time, @tutor.UserName enjoys growing tomatoes.
+                    These tomatoes have won over 14 Blue Ribbon prizes at Lane's
+                    County Fair.  They have even been requested by none other than
+                    Chef Boyardee, who uses these tomatoes to make pizza sauce.
+
+                </p>
+            </div>
         </div>
-        <div class="col-8">
-            <p>
-                Mauris ligula nibh, volutpat nec dignissim ac, placerat nec arcu. In ornare
-                leo diam, et faucibus felis tempor non. Vestibulum consectetur nunc vitae
-                ultricies malesuada. Nullam id justo nec lectus feugiat gravida. Sed in euismod
-                risus. Ut scelerisque nisl sapien, id lobortis urna maximus sed. Vivamus vel
-                metus facilisis, mattis risus eget, laoreet dui. Fusce iaculis eros eget tortor
-                tristique, pharetra ornare sapien tristique. In at leo condimentum, porta
-                libero blandit, egestas ex. Fusce at orci turpis. Suspendisse maximus arcu
-                dolor, a gravida felis accumsan vel. Praesent ac turpis molestie, sollicitudin
-                diam in, tempor nisl. Quisque ornare justo ac fringilla congue. Aliquam
-                tincidunt enim non velit gravida tincidunt.
-            </p>
-        </div>
-    </div>
-  </li>
-  <li>
-          <div class="row">
-        <div class="col-4">
-            <figure>
-                <img src="~/images/robotHead.jpg" />
-                <figcaption>Tutor 1 is looking dapper.</figcaption>
-            </figure>
-        </div>
-        <div class="col-8">
-            <p>
-                Mauris ligula nibh, volutpat nec dignissim ac, placerat nec arcu. In ornare
-                leo diam, et faucibus felis tempor non. Vestibulum consectetur nunc vitae
-                ultricies malesuada. Nullam id justo nec lectus feugiat gravida. Sed in euismod
-                risus. Ut scelerisque nisl sapien, id lobortis urna maximus sed. Vivamus vel
-                metus facilisis, mattis risus eget, laoreet dui. Fusce iaculis eros eget tortor
-                tristique, pharetra ornare sapien tristique. In at leo condimentum, porta
-                libero blandit, egestas ex. Fusce at orci turpis. Suspendisse maximus arcu
-                dolor, a gravida felis accumsan vel. Praesent ac turpis molestie, sollicitudin
-                diam in, tempor nisl. Quisque ornare justo ac fringilla congue. Aliquam
-                tincidunt enim non velit gravida tincidunt.
-            </p>
-        </div>
-    </div>
-  </li>
-  <li>
-          <div class="row">
-        <div class="col-4">
-            <figure>
-                <img src="~/images/robotHead.jpg" />
-                <figcaption>Tutor 1 is looking dapper.</figcaption>
-            </figure>
-        </div>
-        <div class="col-8">
-            <p>
-                Mauris ligula nibh, volutpat nec dignissim ac, placerat nec arcu. In ornare
-                leo diam, et faucibus felis tempor non. Vestibulum consectetur nunc vitae
-                ultricies malesuada. Nullam id justo nec lectus feugiat gravida. Sed in euismod
-                risus. Ut scelerisque nisl sapien, id lobortis urna maximus sed. Vivamus vel
-                metus facilisis, mattis risus eget, laoreet dui. Fusce iaculis eros eget tortor
-                tristique, pharetra ornare sapien tristique. In at leo condimentum, porta
-                libero blandit, egestas ex. Fusce at orci turpis. Suspendisse maximus arcu
-                dolor, a gravida felis accumsan vel. Praesent ac turpis molestie, sollicitudin
-                diam in, tempor nisl. Quisque ornare justo ac fringilla congue. Aliquam
-                tincidunt enim non velit gravida tincidunt.
-            </p>
-        </div>
-    </div>
-  </li>
+      </li>
+    }
+
 </ul>
 
 
