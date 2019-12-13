@@ -107,7 +107,8 @@ namespace TutorForum.Controllers
             Reply reply = new Reply
             {
                 ReplyBody = replyBody,
-                Responder = newMem
+                Responder = newMem,
+                DateAdded = System.DateTime.Now
             };
 
             repo.AddReply(fq, reply, newMem);
