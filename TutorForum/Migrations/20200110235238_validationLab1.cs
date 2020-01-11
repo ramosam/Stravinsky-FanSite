@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TutorForum.Migrations
 {
-    public partial class Initial : Migration
+    public partial class validationLab1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,7 @@ namespace TutorForum.Migrations
                 {
                     MemberID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserName = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(maxLength: 32, nullable: false),
                     Password = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true)
                 },
@@ -43,7 +43,7 @@ namespace TutorForum.Migrations
                 {
                     TutorID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserName = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(maxLength: 32, nullable: false),
                     Password = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true)
                 },
@@ -58,10 +58,10 @@ namespace TutorForum.Migrations
                 {
                     ForumQuestionID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    QuestionerMemberID = table.Column<int>(nullable: true),
+                    QuestionerMemberID = table.Column<int>(nullable: false),
                     DateAdded = table.Column<DateTime>(nullable: false),
-                    QuestionHeader = table.Column<string>(nullable: true),
-                    QuestionBody = table.Column<string>(nullable: true)
+                    QuestionHeader = table.Column<string>(maxLength: 250, nullable: false),
+                    QuestionBody = table.Column<string>(maxLength: 1000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,7 +71,7 @@ namespace TutorForum.Migrations
                         column: x => x.QuestionerMemberID,
                         principalTable: "Members",
                         principalColumn: "MemberID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,8 +82,8 @@ namespace TutorForum.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     QuestionPostForumQuestionID = table.Column<int>(nullable: true),
                     DateAdded = table.Column<DateTime>(nullable: false),
-                    ResponderMemberID = table.Column<int>(nullable: true),
-                    ReplyBody = table.Column<string>(nullable: true)
+                    ResponderMemberID = table.Column<int>(nullable: false),
+                    ReplyBody = table.Column<string>(maxLength: 1000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,7 +99,7 @@ namespace TutorForum.Migrations
                         column: x => x.ResponderMemberID,
                         principalTable: "Members",
                         principalColumn: "MemberID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

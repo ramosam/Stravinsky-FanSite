@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TutorForum.Models
 {
@@ -13,9 +14,13 @@ namespace TutorForum.Models
         public DateTime DateAdded { get; set; }
 
         // The member that wrote the post
+        [StringLength(32, MinimumLength = 8)]
+        [Required]
         public Member Responder { get; set; }
 
         // The reply body that the member wrote
+        [StringLength(1000, ErrorMessage = "Your reply must be under 1000 characters.")]
+        [Required]
         public string ReplyBody { get; set; }
 
         // The double rating of the reply as the answer is voted upon

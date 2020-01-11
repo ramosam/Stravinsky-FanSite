@@ -39,11 +39,15 @@ namespace TutorForum.Migrations
 
                     b.Property<DateTime>("DateAdded");
 
-                    b.Property<string>("QuestionBody");
+                    b.Property<string>("QuestionBody")
+                        .IsRequired()
+                        .HasMaxLength(1000);
 
-                    b.Property<string>("QuestionHeader");
+                    b.Property<string>("QuestionHeader")
+                        .IsRequired()
+                        .HasMaxLength(250);
 
-                    b.Property<int?>("QuestionerMemberID");
+                    b.Property<int>("QuestionerMemberID");
 
                     b.HasKey("ForumQuestionID");
 
@@ -61,7 +65,9 @@ namespace TutorForum.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(32);
 
                     b.HasKey("MemberID");
 
@@ -77,9 +83,11 @@ namespace TutorForum.Migrations
 
                     b.Property<int?>("QuestionPostForumQuestionID");
 
-                    b.Property<string>("ReplyBody");
+                    b.Property<string>("ReplyBody")
+                        .IsRequired()
+                        .HasMaxLength(1000);
 
-                    b.Property<int?>("ResponderMemberID");
+                    b.Property<int>("ResponderMemberID");
 
                     b.HasKey("ReplyID");
 
@@ -99,7 +107,9 @@ namespace TutorForum.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(32);
 
                     b.HasKey("TutorID");
 
@@ -110,7 +120,8 @@ namespace TutorForum.Migrations
                 {
                     b.HasOne("TutorForum.Models.Member", "Questioner")
                         .WithMany("QuestionsAsked")
-                        .HasForeignKey("QuestionerMemberID");
+                        .HasForeignKey("QuestionerMemberID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TutorForum.Models.Reply", b =>
@@ -121,7 +132,8 @@ namespace TutorForum.Migrations
 
                     b.HasOne("TutorForum.Models.Member", "Responder")
                         .WithMany("Answers")
-                        .HasForeignKey("ResponderMemberID");
+                        .HasForeignKey("ResponderMemberID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
