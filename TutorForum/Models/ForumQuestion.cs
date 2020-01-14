@@ -1,17 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace TutorForum.Models
 {
     public class ForumQuestion : IQuestion
     {
         public int ForumQuestionID { get; set; }
+
+        [Required]
+        [StringLength(32, MinimumLength = 8)]
         public Member Questioner { get; set; }
 
         public DateTime DateAdded { get; set; }
 
+        [Required]
+        [UIHint("Question Header")]
+        [StringLength(250, MinimumLength = 20, ErrorMessage = "Your header must be between 20 and 250 characters.")]
         public string QuestionHeader { get; set; }
+
+        [Required]
+        [UIHint("Question Body")]
+        [StringLength(1000, MinimumLength = 20)]
         public string QuestionBody { get; set; }
 
         private List<string> keywords = new List<string>();

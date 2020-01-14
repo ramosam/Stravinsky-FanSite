@@ -59,23 +59,53 @@ namespace TutorForum.Controllers
             //return View();
         }
 
+        //[HttpPost]
+        //public RedirectToActionResult AddForumQuestion(string questioner, string questionHeader, string questionBody)
+        //{
+        //    if (questioner == null || questionHeader == null || questionBody == null)
+        //    {
+        //        return RedirectToAction("AddForumQuestion");
+        //    }
+        //    else
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            Member newMem = new Member
+        //            {
+        //                UserName = questioner,
+        //            };
+        //            ForumQuestion newFQ = new ForumQuestion
+        //            {
+        //                Questioner = newMem,
+        //                QuestionHeader = questionHeader,
+        //                QuestionBody = questionBody,
+        //                DateAdded = System.DateTime.Now,
+        //            };
+
+        //            newFQ.FindKeywords();
+        //            repo.AddMember(newMem);
+        //            repo.AddForumQuestion(newFQ, newMem);
+        //        }
+        //    }
+
+
+        //    return RedirectToAction("Forum", repo.ForumQuestions);
+        //}
+
         [HttpPost]
-        public RedirectToActionResult AddForumQuestion(string questioner, string questionHeader, string questionBody)
+        public RedirectToActionResult AddForumQuestion(ForumQuestion forumQuestion)
         {
-            if (questioner == null || questionHeader == null || questionBody == null)
-            {
-                return RedirectToAction("AddForumQuestion");
-            } else
+            if (ModelState.IsValid)
             {
                 Member newMem = new Member
                 {
-                    UserName = questioner,
+                    UserName = forumQuestion.Questioner.UserName,
                 };
                 ForumQuestion newFQ = new ForumQuestion
                 {
                     Questioner = newMem,
-                    QuestionHeader = questionHeader,
-                    QuestionBody = questionBody,
+                    QuestionHeader = forumQuestion.QuestionHeader,
+                    QuestionBody = forumQuestion.QuestionBody,
                     DateAdded = System.DateTime.Now,
                 };
 
@@ -83,7 +113,7 @@ namespace TutorForum.Controllers
                 repo.AddMember(newMem);
                 repo.AddForumQuestion(newFQ, newMem);
             }
-            
+
 
             return RedirectToAction("Forum", repo.ForumQuestions);
         }
