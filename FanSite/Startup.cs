@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using FanSite.Repositories;
+using Microsoft.AspNetCore.Identity;
+using FanSite.Models;
 
 namespace FanSite
 {
@@ -33,7 +35,7 @@ namespace FanSite
 
             // Add services to inject dependency
             services.AddTransient<IRepository, Repository>();
-            //services.AddMvc();
+            services.AddMvc();
 
 
             // For Mac OS with SQLite
@@ -50,7 +52,8 @@ namespace FanSite
                      Configuration.GetConnectionString("Data:GoodBookNook:MySqlConnection")));
              */
 
-
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>()
+                       .AddDefaultTokenProviders();
 
 
 
@@ -71,6 +74,7 @@ namespace FanSite
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -82,8 +86,7 @@ namespace FanSite
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // Create or update the database and apply migrations.
-            context.Database.Migrate();
+            
 
             SeedData.Seed(context);
         }

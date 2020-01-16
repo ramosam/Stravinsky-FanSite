@@ -20,6 +20,8 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.6" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +43,7 @@
   <ItemGroup>
     <Folder Include="Views\Sources\" />
     <Folder Include="Repositories\" />
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="fansite.db" />
