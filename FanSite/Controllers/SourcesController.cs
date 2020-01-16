@@ -59,17 +59,19 @@ namespace FanSite.Controllers
 
 
         [HttpPost]
-        public RedirectToActionResult AddStory(string user, string storyPost )
+        public RedirectToActionResult AddStory(UserStory storyForm )
         {
-            UserStory uStory = new UserStory
+            if (ModelState.IsValid)
             {
-                StoryPost = storyPost,
-                Name = user
-            };
-            uStory.Name = user;
-            // Temporary - data will be sent to the server
-            repo.AddUserStory(uStory);
-            repo.SortUserStoryByUserName();
+                UserStory uStory = new UserStory
+                {
+                    StoryPost = storyForm.StoryPost,
+                    Name = storyForm.Name
+                };
+                // Temporary - data will be sent to the server
+                repo.AddUserStory(uStory);
+                repo.SortUserStoryByUserName();
+            }
 
             return RedirectToAction("Stories");
         }
