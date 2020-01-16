@@ -9,9 +9,16 @@ namespace TutorForum.Repositories
            DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<FAQuestion> FAQuestions { get; set; }
         public DbSet<ForumQuestion> ForumQuestions { get; set; }
+<<<<<<< Updated upstream
         public DbSet<Member> Members { get; set; }
         public DbSet<Reply> Replies { get; set; }
         public DbSet<Tutor> Tutors { get; set; }
         
+=======
+//        public DbSet<Member> Members { get; set; }
+        public DbSet<Reply> Replies { get; set; }
+        public DbSet<Tutor> Tutors { get; set; }
+
+>>>>>>> Stashed changes
     }
 }

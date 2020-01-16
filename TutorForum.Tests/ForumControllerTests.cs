@@ -38,7 +38,7 @@ namespace TutorForum.Tests
 
             // Assert Forum Question gets added as last item in collection.
             int numMembers = repo.Members.Count;
-            Assert.Equal("questionerUser", repo.Members[numMembers - 1].UserName);
+            Assert.Equal("questionerUser", repo.Members[numMembers - 1].Name);
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace TutorForum.Tests
 
             // Assert reply added to end of replies
             List<Member> members = repo.Members;
-            Assert.Equal(responder, members[members.Count - 1].UserName);
+            Assert.Equal(responder, members[members.Count - 1].Name);
 
 
         }

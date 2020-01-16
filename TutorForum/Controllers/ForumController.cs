@@ -99,7 +99,11 @@ namespace TutorForum.Controllers
             {
                 Member newMem = new Member
                 {
+<<<<<<< Updated upstream
                     UserName = forumQuestion.Questioner.UserName,
+=======
+                     Name = questioner,
+>>>>>>> Stashed changes
                 };
                 ForumQuestion newFQ = new ForumQuestion
                 {
@@ -124,12 +128,12 @@ namespace TutorForum.Controllers
         public RedirectToActionResult AddForumReply(string questionheader, string responder, string replyBody)
         {
             ForumQuestion fq = repo.FindForumQuestionByQuestionHeader(questionheader);
-            Member newMem = repo.Members.Find(m => m.UserName == responder);
+            Member newMem = repo.Members.Find(m => m.Name == responder);
             if (newMem == null)
             {
                 newMem = new Member
                 {
-                    UserName = responder
+                     Name = responder
                 };
                 repo.AddMember(newMem);
             }

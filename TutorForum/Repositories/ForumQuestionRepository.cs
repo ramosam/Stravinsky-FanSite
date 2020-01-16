@@ -62,20 +62,20 @@ namespace TutorForum.Models
         }
 
        
-        public List<Member> Members
-        {
-            get
-            {
-                var members = context.Members
-                    .ToList();
-                return members;
-            }
-        }
+        //public List<Member> Members
+        //{
+        //    get
+        //    {
+        //        //var members = context.Members
+        //        //    .ToList();
+        //        //return members;
+        //    }
+        //}
 
 
         public void AddMember(Member m)
         {
-            context.Members.Add(m);
+            //context.Members.Add(m);
             context.SaveChanges();
         }
         
@@ -87,7 +87,7 @@ namespace TutorForum.Models
             // Find match
             context.ForumQuestions.Add(fq);
             member.QuestionsAsked.Add(fq);
-            context.Members.Update(member);
+            //context.Members.Update(member);
             context.SaveChanges();
         }
 
@@ -97,7 +97,7 @@ namespace TutorForum.Models
             fq.AddReply(r);
             context.ForumQuestions.Update(fq);
             replyMember.Answers.Add(r);
-            context.Members.Update(replyMember);
+            //context.Members.Update(replyMember);
             context.SaveChanges();
         }
 

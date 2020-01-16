@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Runtime.InteropServices;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using TutorForum.Models;
 using TutorForum.Repositories;
 
@@ -31,7 +33,7 @@ namespace TutorForum
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
 
             // Add services to inject dependency
             services.AddTransient<IRepository, ForumQuestionRepository>();
@@ -39,12 +41,20 @@ namespace TutorForum
             services.AddDbContext<AppDbContext>(
                 options => options.UseSqlite(
                     Configuration["Data:TutorForum:SQLiteConnection"]));
+<<<<<<< Updated upstream
+=======
+            services.AddIdentity<Member, IdentityRole>().AddEntityFrameworkStores<AppDbContext>()
+                       .AddDefaultTokenProviders();
+            // Adding for Tutor identity
+         //   services.AddIdentity<Tutor, IdentityRole>().AddEntityFrameworkStores<AppDbContext>()
+         //              .AddDefaultTokenProviders();
+>>>>>>> Stashed changes
 
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, AppDbContext context)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -59,17 +69,27 @@ namespace TutorForum
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+<<<<<<< Updated upstream
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
+=======
+            app.UseCookiePolicy();
+
+
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+>>>>>>> Stashed changes
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            app.UseAuthentication();
             // Create or update the database and apply migrations.
-            context.Database.Migrate();
+          //  context.Database.Migrate();
 
             SeedData.Seed(context);
 

@@ -11,12 +11,13 @@ namespace TutorForum.Repositories
         
         public static void Seed(AppDbContext context)
         {
+            /*
             if (!context.ForumQuestions.Any())
             {
                 // Make Users 
                 Member m1 = new Member
                 {
-                    UserName = "Michelangelo di Lodovico Buonarroti Simoni",
+                    Name = "Michelangelo di Lodovico Buonarroti Simoni",
                     Password = "SistineChapel",
                     Title = "Member"
 
@@ -24,7 +25,7 @@ namespace TutorForum.Repositories
 
                 Member m2 = new Member
                 {
-                    UserName = "Donato di Niccolò di Betto Bardi",
+                    Name = "Donato di Niccolò di Betto Bardi",
                     Password = "StGeorge",
                     Title = "Member"
 
@@ -32,7 +33,7 @@ namespace TutorForum.Repositories
 
                 Member m3 = new Member
                 {
-                    UserName = "Leonardo da Vinci",
+                    Name = "Leonardo da Vinci",
                     Password = "VitruvianMan",
                     Title = "Member"
 
@@ -40,7 +41,7 @@ namespace TutorForum.Repositories
 
                 Member m4 = new Member
                 {
-                    UserName = "Raffaello Sanzio da Urbino",
+                    Name = "Raffaello Sanzio da Urbino",
                     Password = "ThreeGraces",
                     Title = "Member"
 
@@ -197,6 +198,7 @@ namespace TutorForum.Repositories
                 context.SaveChanges();
 
             }
+            */
         }
     }
 }
