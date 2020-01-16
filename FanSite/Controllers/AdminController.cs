@@ -31,13 +31,15 @@ namespace FanSite.Controllers
         public ViewResult Create() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateModel model)
+        public async Task<IActionResult> Create(AccountViewModel model)
         {
             if (ModelState.IsValid)
             {
                 AppUser user = new AppUser
                 {
-                    UserName = model.Name,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    UserName = model.UserName,
                     Email = model.Email
                 };
                 IdentityResult result = await userManager.CreateAsync(user, model.Password);
