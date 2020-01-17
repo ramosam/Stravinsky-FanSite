@@ -11,9 +11,25 @@ namespace Stravinsky.Controllers
 {
     public class HomeController : Controller
     {
-        public ViewResult Index() =>
-            View(new Dictionary<string, object>
-            { ["Placeholder"] = "Placeholder" });
+       
+        public ViewResult Index()
+        {
+            ViewBag.HomePageTitle = "Stravinsky";
+            return View();
+        }
+
+        public ViewResult History()
+        {
+            ViewBag.HistoryTitle = "Once upon a time";
+            return View();
+        }
+
+  
+
+
+        //public ViewResult Index() =>
+        //    View(new Dictionary<string, object>
+        //    { ["Placeholder"] = "Placeholder" });
 
         //private readonly ILogger<HomeController> _logger;
 

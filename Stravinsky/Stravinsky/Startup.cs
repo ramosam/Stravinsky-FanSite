@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Stravinsky.Models;
 using Stravinsky.Infrastructure;
+using Stravinsky.Repositories;
 
 namespace Stravinsky
 {
@@ -27,6 +28,8 @@ namespace Stravinsky
 
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlite(Configuration["Data:Stravinsky:SQLiteConnection"]));
+
+            services.AddTransient<IRepository, Repository>();
 
             services.AddIdentity<AppUser,IdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()

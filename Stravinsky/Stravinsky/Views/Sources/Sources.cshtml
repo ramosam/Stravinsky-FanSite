@@ -1,0 +1,40 @@
+﻿@model List<MediaRef>;
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sources</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <div class="text-center ">
+        <h2>Stravinsky Sources</h2>
+        <p>We now have @ViewData["latestMediaCount"]!</p>
+        <br />
+        <br />
+
+        <table class="sourceTable table table-sm table-striped table-bordered ">
+            <tr>
+                <th>Source</th>
+                <th>Link</th>
+
+            </tr>
+            @foreach (MediaRef mediaRef in Model)
+            {
+                <tr>
+                    <td>@mediaRef.SourceName</td>
+                    <td><a href="@mediaRef.LinkURL">Link to site</a></td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+
+</body>
+</html>

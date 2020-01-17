@@ -67,7 +67,7 @@ namespace Stravinsky.Controllers
                     StoryPost = storyForm.StoryPost,
                     Name = storyForm.Name
                 };
-                // Temporary - data will be sent to the server
+
                 repo.AddUserStory(uStory);
                 repo.SortUserStoryByUserName();
             }
@@ -75,22 +75,6 @@ namespace Stravinsky.Controllers
             return RedirectToAction("Stories");
         }
 
-        [HttpPost]
-        public RedirectToActionResult AddStoryNoSort(string user, string storyPost)
-        {
-            UserStory uStory = new UserStory
-            {
-                Name = user,
-                StoryPost = storyPost
-            };
-
-
-            // Temporary - data will be sent to the server
-            repo.AddUserStory(uStory);
-
-
-            return RedirectToAction("Stories");
-        }
 
         public IActionResult AddStory()
         {
