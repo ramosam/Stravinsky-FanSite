@@ -1,35 +1,17 @@
 # **CS296 Web-Development**
 
-### Lab 1 - Validation
+### Lab 2 - Identity
 
-Controller validation occurs in the ForumController, within the RedirectToActionResult AddForumQuestion.
+Project rebuilt using Stravinsky theme on .NET Core 3.1 with a SQLite database.
 
+Previous iterations of the project can be found in ArchivedProject. 
 
-
-Models that have had validation added:
-
-* ForumQuestion
-  * Required
-  * UIHint
-  * StringLength, MinimumLength
-  * StringLength, MinimumLength, ErrorMessage
-* Member
-  * Required
-  * StringLength
-* Reply
-  * Required
-  * StringLength, MinimumLength
-  * StringLength, ErrorMessage
-* Tutor
-  * Required
-  * StringLength, MinimumLength
+An Admin controller and supporting pages have been added to the Nav bar on the site. There is currently no seed data populating the page. This was intentional to help minimize introducing complications.  
 
 
 
-######	Note: Controller validation has not been added explicitly for Member, Reply, or Tutor.  
-
-The intent is that validation for the Member and Tutor models will be implemented later with user authentication and authorization.  Replies are currently submitted to the controller as strings and not as Reply objects.
+###### Note:  It is intended that seed data will be included in a future release.
 
 
 
-Jan 10, 2020
+Jan 18, 2020
