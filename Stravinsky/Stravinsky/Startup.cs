@@ -31,7 +31,16 @@ namespace Stravinsky
 
             services.AddTransient<IRepository, Repository>();
 
-            services.AddIdentity<AppUser,IdentityRole>()
+            services.AddIdentity<AppUser,IdentityRole>(opts =>
+            {
+                opts.User.RequireUniqueEmail = true;
+                // opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
+                opts.Password.RequiredLength = 6;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequireLowercase = false;
+                opts.Password.RequireUppercase = false;
+                opts.Password.RequireDigit = false;
+            })
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
