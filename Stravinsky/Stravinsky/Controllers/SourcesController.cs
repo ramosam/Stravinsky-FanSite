@@ -69,9 +69,9 @@ namespace Stravinsky.Controllers
                 };
 
                 repo.AddUserStory(uStory);
-                repo.SortUserStoryByUserName();
+                
             }
-
+            repo.SortUserStoryByUserName();
             return RedirectToAction("Stories");
         }
 

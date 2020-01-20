@@ -50,7 +50,7 @@ namespace Stravinsky
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppIdentityDbContext context)
         {
             app.UseStatusCodePages();
             if (env.IsDevelopment())
@@ -77,6 +77,8 @@ namespace Stravinsky
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            SeedData.Seed(context);
         }
     }
 }
