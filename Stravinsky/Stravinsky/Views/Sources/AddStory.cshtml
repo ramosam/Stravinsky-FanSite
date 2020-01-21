@@ -1,0 +1,54 @@
+﻿@model UserStory;
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddStory</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+
+    
+
+    <div class="text-center autoCenter">
+        <h4>Thoughts, reflections, inspiration</h4>
+        <br />
+        <p>
+            Share your story about Stravinsky.
+        </p>
+        <br />
+        <br />
+        <form asp-controller="Sources" class="p-a-1" method="post">
+            <div asp-validation-summary="ModelOnly" style="background-color: red"></div>
+            <label asp-for="Name">Your name:</label>
+            <div><span asp-validation-for="Name"></span></div>
+            <input class="form-control" asp-for="Name" />
+
+            <label asp-for="StoryPost">Story Post:</label>
+            <div><span asp-validation-for="StoryPost"></span></div>
+            <textarea class="form-control" rows="4" asp-for="StoryPost"></textarea>
+            <br />
+            <button class="btn btn-primary" type="submit">
+                Submit story
+            </button>
+        </form>
+
+        <br />
+        <br />
+        <p>
+            Just kidding! Take me <a href="/Home/Index">home</a>
+        </p>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+﻿
+@model List<UserStory>
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Stories</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+
+    <div class="text-center">
+        <h2>Stravinsky Stories</h2>
+        <br />
+        <h4>Thoughts, reflections, inspiration</h4>
+        <br />
+        <br />
+
+
+        <div class="autoCenterWide">
+            @foreach (UserStory userStory in Model)
+            {
+                <table class=" table table-bordered ">
+                    <tr>
+                        <th><h5>@userStory.Name writes</h5></th>
+                        <th>@userStory.StoryPost</th>
+                    </tr>
+                    @foreach (Comment c in userStory.Comments)
+                    {
+                        <tr>
+                            <td>@c.Name writes</td>
+                            <td>@c.CommentText</td>
+                        </tr>
+
+                    }
+
+                </table>
+
+
+                <a asp-action="AddComment" asp-route-storypost="@userStory.StoryPost">Add a comment</a>
+                <br /><br /><br /><br />
+            }
+            <br /><br /><br />
+
+        </div>
+
+        <br /><a href="AddStory">Add a story</a>
+        <br /><a href="/Home">Home</a><br />
+
+
+    </div>
+
+</body>
+</html>
