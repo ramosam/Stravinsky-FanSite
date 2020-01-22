@@ -31,17 +31,19 @@ namespace Stravinsky
 
             services.AddTransient<IRepository, Repository>();
 
-            //services.AddIdentity<AppUser,IdentityRole>()
-            //    .AddEntityFrameworkStores<AppIdentityDbContext>()
-            //    .AddDefaultTokenProviders();
-
-            services.AddIdentity<AppUser, IdentityRole>(opts => {
+            services.AddIdentity<AppUser,IdentityRole>(opts =>
+            {
                 opts.User.RequireUniqueEmail = true;
-                //opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
-                opts.Password.RequiredLength = 6; opts.Password.RequireNonAlphanumeric = false;
-                opts.Password.RequireLowercase = false; opts.Password.RequireUppercase = false;
+                // opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
+                opts.Password.RequiredLength = 6;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequireLowercase = false;
+                opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = false;
-            }).AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
+            })
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
 
 
             services.AddMvc();
@@ -49,7 +51,7 @@ namespace Stravinsky
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppIdentityDbContext context)
         {
             app.UseStatusCodePages();
             if (env.IsDevelopment())
@@ -76,6 +78,13 @@ namespace Stravinsky
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices,
+Configuration).Wait();
+
+
+            SeedData.Seed(context);
+
         }
     }
 }
