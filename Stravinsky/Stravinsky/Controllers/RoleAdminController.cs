@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Stravinsky.Models;
 
 namespace Stravinsky.Controllers
 {
+    [Authorize(Roles = "Admins")]
     public class RoleAdminController : Controller
     {
         private RoleManager<IdentityRole> roleManager;

@@ -76,6 +76,8 @@ namespace Stravinsky
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices,
+Configuration).Wait();
         }
     }
 }
