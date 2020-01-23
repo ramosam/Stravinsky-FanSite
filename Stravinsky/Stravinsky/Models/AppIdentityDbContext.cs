@@ -15,7 +15,6 @@ namespace Stravinsky.Models
         public DbSet<UserStory> UserStories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<MediaRef> MediaRefs { get; set; }
-        //public DbSet<AppUser> AppUsers { get; set; }
 
 
         public static async Task CreateAdminAccount(IServiceProvider serviceProvider,
@@ -23,7 +22,12 @@ namespace Stravinsky.Models
         {
             UserManager<AppUser> userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
             RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            string username = configuration["Data:AdminUser:Name"]; string email = configuration["Data:AdminUser:Email"]; string password = configuration["Data:AdminUser:Password"]; string role = configuration["Data:AdminUser:Role"];
+
+            string username = configuration["Data:AdminUser:Name"];
+            string email = configuration["Data:AdminUser:Email"];
+            string password = configuration["Data:AdminUser:Password"];
+            string role = configuration["Data:AdminUser:Role"];
+
             if (await userManager.FindByNameAsync(username) == null)
             {
                 if (await roleManager.FindByNameAsync(role) == null)

@@ -20,14 +20,16 @@ namespace Stravinsky.Controllers
             roleManager = roleMgr;
             userManager = userMrg;
         }
+
         public ViewResult Index() => View(roleManager.Roles); public IActionResult Create() => View();
+
         [HttpPost]
         public async Task<IActionResult> Create([Required]string name)
         {
             if (ModelState.IsValid)
             {
-                IdentityResult result
-= await roleManager.CreateAsync(new IdentityRole(name)); if (result.Succeeded)
+                IdentityResult result = await roleManager.CreateAsync(new IdentityRole(name));
+                if (result.Succeeded)
                 {
                     return RedirectToAction("Index");
                 }
