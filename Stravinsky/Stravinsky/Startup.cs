@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Stravinsky.Models;
 using Stravinsky.Infrastructure;
 using Stravinsky.Repositories;
+using System.Runtime.InteropServices;
 
 namespace Stravinsky
 {
@@ -23,13 +24,28 @@ namespace Stravinsky
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(
-            //    Configuration["Data:SportStoreIdentity:ConnectionString"]));
 
-            services.AddDbContext<AppIdentityDbContext>(options =>
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseSqlServer(Configuration["Data:Stravinsky:MSSQLConnection"]));
+            }
+            else
+            {
+                services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlite(Configuration["Data:Stravinsky:SQLiteConnection"]));
+            }
+                //services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(
+                //    Configuration["Data:SportStoreIdentity:ConnectionString"]));
+
+                //services.AddDbContext<AppIdentityDbContext>(options =>
+                //options.UseSqlite(Configuration["Data:Stravinsky:SQLiteConnection"]));
 
             services.AddTransient<IRepository, Repository>();
+
+
+
+
 
             services.AddIdentity<AppUser,IdentityRole>(opts =>
             {
