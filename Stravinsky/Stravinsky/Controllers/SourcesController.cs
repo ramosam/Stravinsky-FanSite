@@ -69,7 +69,24 @@ namespace Stravinsky.Controllers
                 };
 
                 repo.AddUserStory(uStory);
-                repo.SortUserStoryByUserName();
+                
+            }
+            repo.SortUserStoryByUserName();
+            return RedirectToAction("Stories");
+        }
+
+        [HttpPost]
+        public RedirectToActionResult AddStoryNoSort(UserStory storyForm)
+        {
+            if (ModelState.IsValid)
+            {
+                UserStory uStory = new UserStory
+                {
+                    StoryPost = storyForm.StoryPost,
+                    Name = storyForm.Name
+                };
+
+                repo.AddUserStory(uStory);
             }
 
             return RedirectToAction("Stories");

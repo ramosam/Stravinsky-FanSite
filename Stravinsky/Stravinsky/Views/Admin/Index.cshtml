@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<AppUser>
 
+
 <div class="bg-primary m-1 p-1 text-white"><h4>User Accounts</h4></div>
 
 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
@@ -38,3 +39,7 @@
     }
 </table>
 <a class="btn btn-primary" asp-action="Create">Create</a>
+<br /><br /><br /><br />
+<div class="bg-primary m-1 p-1 text-white"><h4>Role Administration</h4></div>
+<a class="btn btn-primary" asp-controller="RoleAdmin" asp-action="Index">Manage Roles</a>
+<a class="btn btn-primary" asp-controller="RoleAdmin" asp-action="Create">Create Roles</a>

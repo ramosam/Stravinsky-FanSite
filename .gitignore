@@ -1,3 +1,9 @@
+#SQLite files in project
+*.db
+*.db-wal
+*.db-shm
+
+
 # globs
 Makefile.in
 *.userprefs
