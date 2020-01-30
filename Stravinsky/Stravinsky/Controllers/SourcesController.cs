@@ -103,24 +103,29 @@ namespace Stravinsky.Controllers
         [Authorize(Roles = "Member")]
         public IActionResult AddComment(string storypost)
         {
-            return View("AddComment", HttpUtility.HtmlDecode(storypost));
+            CommentViewModel cvm = new CommentViewModel{
+                StoryPost = storypost
+            };
+
+            return View("AddComment", cvm);
         }
 
         [Authorize(Roles = "Member")]
         [HttpPost]
-        public RedirectToActionResult AddComment(string storypost,
-                                                 string user,
-                                                 string commentText)
+        public RedirectToActionResult AddComment(CommentViewModel cvm)
         {
-            UserStory uStory = repo.GetUserStoryByPost(storypost);
-
-            Comment comment = new Comment()
+            if (ModelState.IsValid)
             {
-                CommentText = commentText,
-                Name = user,
-            };
+                UserStory uStory = repo.GetUserStoryByPost(cvm.StoryPost);
 
-            repo.AddComment(uStory, comment);
+                Comment comment = new Comment()
+                {
+                    CommentText = cvm.CommentText,
+                    Name = cvm.Name,
+                };
+
+                repo.AddComment(uStory, comment);
+            }
 
             return RedirectToAction("Stories");
         }
