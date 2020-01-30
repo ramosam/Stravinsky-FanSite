@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stravinsky.Models;
 using Stravinsky.Repositories;
@@ -56,7 +57,7 @@ namespace Stravinsky.Controllers
             return View(userStories);
         }
 
-
+        [Authorize(Roles="Member")]
         [HttpPost]
         public RedirectToActionResult AddStory(UserStory storyForm)
         {
@@ -75,6 +76,7 @@ namespace Stravinsky.Controllers
             return RedirectToAction("Stories");
         }
 
+        [Authorize(Roles = "Member")]
         [HttpPost]
         public RedirectToActionResult AddStoryNoSort(UserStory storyForm)
         {
@@ -92,17 +94,19 @@ namespace Stravinsky.Controllers
             return RedirectToAction("Stories");
         }
 
-
+        [Authorize(Roles = "Member")]
         public IActionResult AddStory()
         {
             return View();
         }
 
+        [Authorize(Roles = "Member")]
         public IActionResult AddComment(string storypost)
         {
             return View("AddComment", HttpUtility.HtmlDecode(storypost));
         }
 
+        [Authorize(Roles = "Member")]
         [HttpPost]
         public RedirectToActionResult AddComment(string storypost,
                                                  string user,

@@ -69,6 +69,14 @@ namespace Stravinsky
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppIdentityDbContext context)
         {
+            // Addressing X-Content-Type-Options
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                await next();
+            });
+
+
             app.UseStatusCodePages();
             if (env.IsDevelopment())
             {
