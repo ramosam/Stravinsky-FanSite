@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Stravinsky.Models;
 using Stravinsky.Infrastructure;
 using Stravinsky.Repositories;
+using System.Runtime.InteropServices;
+using Microsoft.AspNetCore.Http;
+using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Stravinsky
 {
@@ -23,18 +27,36 @@ namespace Stravinsky
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(
-            //    Configuration["Data:SportStoreIdentity:ConnectionString"]));
+
+            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            //{
+            //    services.AddDbContext<AppIdentityDbContext>(options =>
+            //    options.UseSqlServer(Configuration["Data:Stravinsky:MSSQLConnection"]));
+            //}
+            //else
+            //{
+            //    services.AddDbContext<AppIdentityDbContext>(options =>
+            //    options.UseSqlite(Configuration["Data:Stravinsky:SQLiteConnection"]));
+            //}
 
             services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseSqlite(Configuration["Data:Stravinsky:SQLiteConnection"]));
+            options.UseSqlite(Configuration["Data:Stravinsky:SQLiteConnection"]));
+
 
             services.AddTransient<IRepository, Repository>();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.Secure = CookieSecurePolicy.Always;
+            });
+
+
 
             services.AddIdentity<AppUser,IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
-                // opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
                 opts.Password.RequiredLength = 6;
                 opts.Password.RequireNonAlphanumeric = false;
                 opts.Password.RequireLowercase = false;
@@ -45,7 +67,7 @@ namespace Stravinsky
                 .AddDefaultTokenProviders();
 
 
-
+            services.AddResponseCaching();
             services.AddMvc();
             
         }
@@ -53,6 +75,19 @@ namespace Stravinsky
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppIdentityDbContext context)
         {
+            // Addressing X-Content-Type-Options, X-Frame-Options
+            app.Use(async (ctx, next) =>
+            {
+                ctx.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                ctx.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                ctx.Response.Headers.Add("X-XSS-Protection", "1");
+                ctx.Response.Headers.Add("Cache-Control", "no-cache");
+                await next();
+            });
+
+
+
+
             app.UseStatusCodePages();
             if (env.IsDevelopment())
             {
@@ -66,8 +101,10 @@ namespace Stravinsky
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseRouting();
+            app.UseResponseCaching();
 
             app.UseAuthentication();
             app.UseAuthorization();
