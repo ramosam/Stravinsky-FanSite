@@ -78,7 +78,18 @@ namespace Stravinsky
                 ctx.Response.Headers.Add("X-Content-Type-Options", "nosniff");
                 ctx.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
                 ctx.Response.Headers.Add("X-XSS-Protection", "1");
-                ctx.Response.Headers.Add("Cache-Control", "no-cache");
+                ctx.Response.Headers.Add("Cache-Control", "must-revalidate, no-cache, no-store");
+                ctx.Response.Headers.Add("Pragma", "no-cache");
+                ctx.Response.Headers.Append("Expires", "0");
+                ctx.Response.GetTypedHeaders().CacheControl =
+                    new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+                    {
+                        Private = false,
+                        MaxAge = TimeSpan.FromSeconds(10),
+                        NoStore = true,
+                        NoCache = true,
+                        MustRevalidate = true,
+                    };
                 await next();
             });
 
