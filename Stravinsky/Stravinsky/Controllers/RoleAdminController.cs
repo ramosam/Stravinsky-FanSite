@@ -21,7 +21,12 @@ namespace Stravinsky.Controllers
             userManager = userMrg;
         }
 
-        public ViewResult Index() => View(roleManager.Roles); public IActionResult Create() => View();
+        public ViewResult Index()
+        { 
+            return View(roleManager.Roles); 
+        }
+
+        public IActionResult Create() => View();
 
         [HttpPost]
         public async Task<IActionResult> Create([Required]string name)
@@ -110,7 +115,7 @@ namespace Stravinsky.Controllers
             }
             if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "RoleAdmin");
             }
             else
             {

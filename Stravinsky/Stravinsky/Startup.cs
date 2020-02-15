@@ -28,19 +28,9 @@ namespace Stravinsky
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            //{
-            //    services.AddDbContext<AppIdentityDbContext>(options =>
-            //    options.UseSqlServer(Configuration["Data:Stravinsky:MSSQLConnection"]));
-            //}
-            //else
-            //{
-            //    services.AddDbContext<AppIdentityDbContext>(options =>
-            //    options.UseSqlite(Configuration["Data:Stravinsky:SQLiteConnection"]));
-            //}
 
             services.AddDbContext<AppIdentityDbContext>(options =>
-            options.UseSqlite(Configuration["Data:Stravinsky:SQLiteConnection"]));
+            options.UseSqlServer(Configuration["ConnectionStrings:MSSQLConnection"]));
 
 
             services.AddTransient<IRepository, Repository>();
