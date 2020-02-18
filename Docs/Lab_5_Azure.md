@@ -6,7 +6,7 @@ Site has been hosted in Azure.
 
 https://stravinsky19.azurewebsites.net/
 
-The RoleAdmin Controller has gone missing however.  There are no publish errors, no logs in Azure, no idea what has happened.  :(
+
 
 
 
