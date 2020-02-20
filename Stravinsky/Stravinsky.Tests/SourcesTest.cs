@@ -67,8 +67,13 @@ namespace Stravinsky.Tests
             var sourcesController = new SourcesController(repo);
 
             // Act
-
-            sourcesController.AddComment("Fake StoryPost1", "newCommentUser", "newCommentText");
+            CommentViewModel cvm = new CommentViewModel
+            {
+                Name = "newCommentUser",
+                StoryPost = "Fake StoryPost1",
+                CommentText = "newCommentText"
+            };
+            sourcesController.AddComment(cvm);
 
             // Assert
             /* Assert that the newest comment is correctly associated
