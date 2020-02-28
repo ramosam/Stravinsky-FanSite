@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -8,11 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\" />
-    <Folder Include="Views\Admin\" />
     <Folder Include="Repositories\" />
-    <Folder Include="Views\Sources\" />
-    <Folder Include="Views\Account\" />
-    <Folder Include="Views\RoleAdmin\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.1" />

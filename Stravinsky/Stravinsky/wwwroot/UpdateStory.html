@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Edit or Delete</title>
+    <script src="/js/site.js"></script>
+    <script>
+        // set event handlers and fill the select list
+        function init() {
+            // set up the event handler for posting book data
+            var form = document.getElementById("storyForm");
+
+            var updateButton = document.getElementById("updateButton");
+            updateButton.onclick = updateStory;
+
+            var replaceButton = document.getElementById("replaceButton");
+            replaceButton.onclick = replaceStory;
+
+            var deleteButton = document.getElementById("deleteButton");
+            deleteButton.onclick = deleteStory;
+
+            // set the event handler for the select list
+            var sel = document.getElementsByTagName("select")[0];
+            sel.onchange = getStoryById;
+
+            // Fill the drop-down in the select list box with book data when the page opens
+            getAllUserStories(fillSelectList);
+        }
+    </script>
+</head>
+
+<body onload="init()">
+
+    <h1>Edit or Delete Book Information</h1>
+    <nav>
+        <a href="AccessIndex.html">Home - List all stories</a><br>
+        <a href="AccessIndex.html#addStory">Home - Add a story</a><br>
+    </nav>
+    <form id="storyForm">
+        <p>
+            <select>
+                <option value="0">Choose a story</option>
+            </select>
+        </p>
+        <input id="userStoryID" name="userStoryID" hidden>
+
+        <label for="storyPost">StoryPost</label>
+        <input id="storyPost" name="storyPost" placeholder="My Story">
+        <br>
+        <label for="name">Name</label>
+        <input id="name" name="name" placeholder="my_name">
+    </form>
+    <br>
+    <button id="updateButton">Update StoryPost</button> - Change the StoryPost only
+    <p>
+        <button id="replaceButton">Replace StoryPost</button> - Replace everything
+    </p>
+    <p>
+        <button id="deleteButton">Delete StoryPost</button> - Remove the StoryPost
+    </p>
+</body>
+
+</html>
