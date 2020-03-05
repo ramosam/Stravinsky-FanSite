@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="/js/site.js"></script>
+    <script>
+        // set up event handlers for this page
+        function init() {
+            // set up the event handler for posting story data
+            var form = document.getElementById("storyForm");
+            form.onsubmit = function(e) {
+                // prevent the form from sending an HTTP request when it is submitted
+                e.preventDefault();
+                addStory();
+            };
+            // Fill the table on the page with story data when the page opens
+            getAllUserStories(fillTable);
+        }
+    </script>
+    <title>UserStory API Client</title>
+</head>
+
+<body onload="init()">
+
+    <h1>UserStory Web Service Client</h1>
+
+    <nav>
+        <a href="#addStory">Add a story to the database</a><br>
+        <a href="UpdateStory.html">Edit a story already in the database</a><br>
+    </nav>
+
+    <h2>List of all stories</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>StoryPost</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <section id="addStory">
+        <h2>Add a Story</h2>
+        <form id="storyForm">
+            <label for="storyPost">StoryPost</label>
+            <input name="storyPost" placeholder="My Story">
+            <br>
+            <label for="name">Name</label>
+            <input name="name" placeholder="Your name">
+            <br>
+            <button>Add Story</button>
+        </form>
+    </section>
+</body>
+
+</html>

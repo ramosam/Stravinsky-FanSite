@@ -45,32 +45,44 @@ namespace Stravinsky.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserStory(int id, UserStory userStory)
+        public async Task<IActionResult> PutUserStory(int id, [FromBody] UserStory userStory)
         {
-            if (id != userStory.UserStoryID)
+            var uStory = await _context.UserStories.FindAsync(id);
+            if (uStory != null)
             {
-                return BadRequest();
+                uStory.Name = userStory.Name;
+                uStory.StoryPost = userStory.StoryPost;
             }
+            _context.UserStories.Update(uStory);
+            await _context.SaveChangesAsync();
+            return Ok(uStory);
 
-            _context.Entry(userStory).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserStoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            // Original Scaffolded Code - works in Postman, not in App
+            //if (id !=  userStory.UserStoryID)
+            //{
+            //    return BadRequest();
+            //}
 
-            return NoContent();
+            //_context.Entry(userStory).State = EntityState.Modified;
+
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!UserStoryExists(id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+
+            //return NoContent();
         }
 
         // POST: api/APIUserStories
