@@ -173,37 +173,6 @@ function replaceStory() {
 
 
 
-
-    /*
-    var data = getFormData();
-    //var putData = {};
-    //putData.userStoryID = data["userStoryID"];
-    //putData.storyPost = data["storyPost"];
-    //putData.name = data["name"];
-    
-
-    // create an HTTP PUT request
-    var xhr = new XMLHttpRequest();
-    xhr.open("PUT", USERSTORY_URL + "/" + data.userStoryID.toString(), true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onerror = errorHandler;
-
-    // serialize the data to a string so it can be sent
-    var dataString = JSON.stringify(putData);
-    xhr.send(dataString);
-    clearSelectList();
-
-    //const response = await fetch(USERSTORY_URL + "/" + data.userStoryID, {
-    //    method: 'PUT',
-    //    body: JSON.stringify(putData),
-    //    headers: {
-    //        'Content-Type': 'application/json'
-    //    },
-    //});
-    //console.log(await response.json());
-    */
-
-
 }
 
 /**************************************************/
